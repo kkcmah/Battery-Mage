@@ -3,7 +3,11 @@ export default class PreloadScene extends Phaser.Scene {
     super({ key: 'PreloadScene' })
   }
 
-  preload() {}
+  preload() {
+    // font created from snowb.org
+    this.load.bitmapFont('battery', '/assets/fonts/battery-font.png', '/assets/fonts/battery-font.xml')
+    this.load.image('zap', '/assets/img/BatteryMageZap.png')
+  }
 
   create() {
     this.scene.start('MainScene')
