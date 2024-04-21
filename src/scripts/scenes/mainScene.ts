@@ -3,10 +3,12 @@ import { ExtendedObject3D, Scene3D, THREE, ThirdPersonControls } from '@enable3d
 import Ground from '../ground'
 import SampleStuffs from '../sampleStuffs'
 import Player from '../player'
+import Npc, { NpcTypes } from '../npc'
 
 export default class MainScene extends Scene3D {
   player: Player
   sampleStuffs: SampleStuffs
+  npcs: Npc[] = []
 
   constructor() {
     super({ key: 'MainScene' })
@@ -30,6 +32,10 @@ export default class MainScene extends Scene3D {
 
     // add player
     this.player = new Player(this)
+
+    this.npcs.push(new Npc(this, NpcTypes.Background, new THREE.Vector3(2, 0, 0)))
+    const noPBox = this.third.add.box({ x: 1, y: 2 }, { phong: { color: 'rgb(0,255,0)' } })
+    this.npcs.push(new Npc(this, NpcTypes.Interactable, new THREE.Vector3(2, 0, 2), noPBox))
   }
 
   // TODO
@@ -40,5 +46,8 @@ export default class MainScene extends Scene3D {
 
   update(time: number, delta: number) {
     this.player.update(time, delta)
+    for (let i = 0; i < this.npcs.length; i++) {
+      this.npcs[i].update(time, delta)
+    }
   }
 }

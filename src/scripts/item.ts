@@ -1,5 +1,6 @@
 import { ExtendedObject3D, Scene3D, THREE } from '@enable3d/phaser-extension'
 import { COIN, GROUNDTWEENDUR, PLAYERREF } from './constants'
+import { checkCollisionWithPlayer, disposeMesh } from './utils'
 
 export enum ItemTypes {
   EXP,
@@ -45,30 +46,6 @@ export default class Item {
   // TODO
   constructEXP() {}
 
-  // given corner coords of square check if player's mid position intersects
-  checkCollision(xRange: number[], zRange: number[]): boolean {
-    let playerXYZ = PLAYERREF.player?.position
-    if (
-      playerXYZ &&
-      xRange[0] <= playerXYZ.x &&
-      playerXYZ.x <= xRange[1] &&
-      zRange[0] <= playerXYZ.z &&
-      playerXYZ.z <= zRange[1]
-    ) {
-      return true
-    }
-    return false
-  }
-
-  disposeMesh() {
-    //https://discourse.threejs.org/t/correctly-remove-mesh-from-scene-and-dispose-material-and-geometry/5448/2
-    this.itemObj3D.geometry.dispose()
-    //@ts-ignore
-    this.itemObj3D.material.dispose()
-    this.scene.third.scene.remove(this.itemObj3D)
-    this.scene.third.renderer.renderLists.dispose()
-  }
-
   slowlyFadeAway(collideRadius: number) {
     const duration = 200
     const durationReciprocal = 1 / duration
@@ -94,12 +71,12 @@ export default class Item {
       repeat: repeat,
       yoyo: true,
       onUpdate: () => {
-        if (!collected && this.checkCollision(xRange, zRange)) {
-          this.disposeMesh()
+        if (!collected && checkCollisionWithPlayer(xRange, zRange)) {
+          disposeMesh(this.scene, this.itemObj3D)
           tweenAfterRef?.remove()
           tweenAfterRef = undefined
           collected = true
-          PLAYERREF.player?.usePotion()
+          PLAYERREF.player?.pickUp(this.itemType)
           return
         } else {
           this.itemObj3D.position.set(tmp.x, tmp.y, tmp.z)
@@ -110,7 +87,7 @@ export default class Item {
         }
       },
       onComplete: () => {
-        this.disposeMesh()
+        disposeMesh(this.scene, this.itemObj3D)
       }
     }
 

@@ -1,3 +1,5 @@
+import { ZapIMG } from "../constants"
+
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
     super({ key: 'PreloadScene' })
@@ -6,8 +8,8 @@ export default class PreloadScene extends Phaser.Scene {
   preload() {
     // font created from snowb.org
     this.load.bitmapFont('battery', '/assets/fonts/battery-font.png', '/assets/fonts/battery-font.xml')
-    this.load.image('zap', '/assets/img/BatteryMageZap.png')
-    this.load.image('zap2', '/assets/img/BatteryMageZap2.png')
+    this.load.image(ZapIMG.ZAP, '/assets/img/BatteryMageZap.png')
+    this.load.image(ZapIMG.ZAP2, '/assets/img/BatteryMageZap2.png')
   }
 
   create() {

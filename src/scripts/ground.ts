@@ -1,6 +1,6 @@
 import { Scene3D, THREE } from '@enable3d/phaser-extension'
 
-import { GROUNDTWEENDUR, ZAP } from './constants'
+import { GROUNDTWEENDUR, PLAYERREF, ZAP } from './constants'
 import { getRandomBetween } from './utils'
 import { groundHeights, groundRGBs } from './groundData'
 import Item, { ItemTypes } from './item'
@@ -52,6 +52,7 @@ export default class Ground {
         // newBox.name = 'ground'
         newBox.body.on.collision((otherObj, event) => {
           if (otherObj.name === ZAP && !newBox.userData.isColored && event === 'start') {
+            PLAYERREF.player?.litObject()
             //@ts-ignore
             newBox.material.color.set(
               `rgb(${groundRGBs[colorStartRed][0]}, ${groundRGBs[colorStartRed][1]}, ${groundRGBs[colorStartRed][2]})`
@@ -81,7 +82,7 @@ export default class Ground {
             new Item(
               this.scene,
               ItemTypes.Coin,
-              coinEmitPos,
+              coinEmitPos
               // new THREE.Vector3(0, 10, 0),
               // // using random coin x and z for angular velocity is good enough
               // new THREE.Vector3(coinXR, 1, coinZR)
