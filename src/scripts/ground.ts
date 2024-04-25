@@ -19,7 +19,7 @@ export default class Ground {
     // further multiply x and z pos of boxes so they dont constantly collide with eachother
     const SPREADMULTFACTOR = 1.0001
     // assume square ground
-    const GROUNDX = 30
+    const GROUNDX = 30 // 30
     for (let i = 0; i < GROUNDX; i++) {
       for (let j = 0; j < GROUNDX; j++) {
         let colorStartRed = i * GROUNDX + j
@@ -87,6 +87,12 @@ export default class Ground {
               // // using random coin x and z for angular velocity is good enough
               // new THREE.Vector3(coinXR, 1, coinZR)
             )
+
+            const expXR = getRandomBetween(-spawnRadius, spawnRadius)
+            const expY = coinY
+            const expZR = getRandomBetween(-spawnRadius, spawnRadius)
+            const expEmitPos = new THREE.Vector3(tmp.x + expXR, expY, tmp.z + expZR)
+            new Item(this.scene, ItemTypes.EXP, expEmitPos)
           }
         })
       }

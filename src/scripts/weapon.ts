@@ -47,13 +47,21 @@ export default class Weapon {
     pos.add(emitPos)
 
     for (let i = 0; i < this.weaponData.shotNum; i++) {
-      const mageZap = this.scene.third.physics.add.sphere({ radius: 0.1, x: pos.x, y: pos.y, z: pos.z, mass: 1 })
+      const mageZap = this.scene.third.physics.add.sphere({
+        radius: 0.15,
+        x: pos.x,
+        y: pos.y,
+        z: pos.z,
+        mass: 1
+      })
       mageZap.visible = false
       mageZap.name = ZAP
       mageZap.userData.damage = this.weaponData.damage
       // clamp motion to sweep a bit smaller than physics body radius
       mageZap.body.setCcdMotionThreshold(1)
-      mageZap.body.setCcdSweptSphereRadius(0.07)
+      mageZap.body.setCcdSweptSphereRadius(0.05)
+      mageZap.body.setGravity(0, -1, 0)
+      mageZap.body.setFriction(10)
 
       // add zap image to physics body
       const zapImgToUse = this.weaponData.zapImg[Math.floor(Math.random() * this.weaponData.zapImg.length)]
@@ -97,7 +105,9 @@ export default class Weapon {
         forceZ *= Math.random() * 20
       }
 
-      mageZap.body.applyForce(forceX, forceY, forceZ)
+      setTimeout(() => {
+        mageZap.body.applyForce(forceX, forceY, forceZ)
+      }, 2)
     }
   }
 }

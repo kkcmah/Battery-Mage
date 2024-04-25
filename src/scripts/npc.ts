@@ -66,11 +66,15 @@ export default class Npc {
       offset: { y: -0.1 },
       height: 1.4,
       width: 0.7,
-      mass: 100
+      mass: 10
     })
     this.npcObj3D = body.add(head)
+    this.npcObj3D.body.setDamping(0.8, 0.8)
+    this.npcObj3D.body.setFriction(0.8)
+    this.npcObj3D.userData = { isColored: false, isGround: true }
     this.npcObj3D.body.on.collision((otherObj, event) => {
       if (otherObj.name === ZAP && !this.npcObj3D.userData.isColored && event === 'start') {
+        PLAYERREF.player?.litObject()
         //@ts-ignore
         this.npcObj3D.material.color.set(`rgb(${this.colorRGB.r}, ${this.colorRGB.g}, ${this.colorRGB.b})`)
         this.npcObj3D.children.forEach((val) => {
@@ -83,7 +87,7 @@ export default class Npc {
   }
 
   constructShopItem(customNpcObj3D: ExtendedObject3D) {
-    this.npcObj3D = customNpcObj3D.clone(false)
+    this.npcObj3D = customNpcObj3D.clone(true)
     this.npcObj3D.visible = true
     this.npcObj3D.position.set(this.spawnPos.x, this.spawnPos.y, this.spawnPos.z)
     this.scene.third.add.existing(this.npcObj3D)
@@ -93,34 +97,34 @@ export default class Npc {
 
     let tmp = this.spawnPos.clone()
 
-    let collideHitBox = 0.5
+    let collideHitBox = 0.8
     const xRange = [tmp.x - collideHitBox, tmp.x + collideHitBox]
     const zRange = [tmp.z - collideHitBox, tmp.z + collideHitBox]
 
-    const xRangeShopText = [tmp.x - collideHitBox * 3, tmp.x + collideHitBox * 3]
-    const zRangeShopText = [tmp.z - collideHitBox * 3, tmp.z + collideHitBox * 3]
+    const xRangeShopText = [tmp.x - collideHitBox * 5, tmp.x + collideHitBox * 5]
+    const zRangeShopText = [tmp.z - collideHitBox * 5, tmp.z + collideHitBox * 5]
 
-    // TODO remove later show collision corners
-    this.scene.third.add.box(
-      { x: xRange[0], y: 2, z: zRange[0], height: 10, width: 0.2, depth: 0.2 },
-      { phong: { color: 'rgb(0,255,0)' } }
-    )
-    this.scene.third.add.box(
-      { x: xRange[1], y: 2, z: zRange[1], height: 10, width: 0.2, depth: 0.2 },
-      { phong: { color: 'rgb(255,0,0)' } }
-    )
-    this.scene.third.add.box(
-      { x: xRangeShopText[0], y: 2, z: zRangeShopText[0], height: 10, width: 0.2, depth: 0.2 },
-      { phong: { color: 'rgb(0,0,255)' } }
-    )
-    this.scene.third.add.box(
-      { x: xRangeShopText[1], y: 2, z: zRangeShopText[1], height: 10, width: 0.2, depth: 0.2 },
-      { phong: { color: 'rgb(255,0,255)' } }
-    )
+    // TODO uncomment to show collision corners
+    // this.scene.third.add.box(
+    //   { x: xRange[0], y: 2, z: zRange[0], height: 10, width: 0.2, depth: 0.2 },
+    //   { phong: { color: 'rgb(0,255,0)' } }
+    // )
+    // this.scene.third.add.box(
+    //   { x: xRange[1], y: 2, z: zRange[1], height: 10, width: 0.2, depth: 0.2 },
+    //   { phong: { color: 'rgb(255,0,0)' } }
+    // )
+    // this.scene.third.add.box(
+    //   { x: xRangeShopText[0], y: 2, z: zRangeShopText[0], height: 10, width: 0.2, depth: 0.2 },
+    //   { phong: { color: 'rgb(0,0,255)' } }
+    // )
+    // this.scene.third.add.box(
+    //   { x: xRangeShopText[1], y: 2, z: zRangeShopText[1], height: 10, width: 0.2, depth: 0.2 },
+    //   { phong: { color: 'rgb(255,0,255)' } }
+    // )
 
     const shopTextPos = this.spawnPos.clone()
     shopTextPos.y = this.spawnPos.y + 2
-    const shopTextBg = this.scene.add.star(-150, -150, 7, 80, 100, 0xe0e0e0, 0.4).setVisible(false)
+    const shopTextBg = this.scene.add.star(-150, -150, 7, 40, 50, 0x404040, 0.4).setVisible(false)
     const shopText = this.scene.add.bitmapText(-100, -100, 'battery', '100 / 100', 30, 1).setDepth(1).setVisible(false)
     Phaser.Display.Align.In.Center(shopText, shopTextBg)
     let distance = this.scene.third.camera.position.distanceTo(tmp)
@@ -154,7 +158,9 @@ export default class Npc {
           shopTextBg.setScale(size)
 
           setShopTextVisibility(true)
-          shopText.setText(`${11}`)
+          shopText.setText(
+            `${this.shopItemData.shopText} \n \n cost: ${this.shopItemData.cost} \n\n walk into me to buy`
+          )
 
           let pos = this.scene.third.transform.from3dto2d(shopTextPos)
           shopTextBg.setPosition(pos.x, pos.y)
@@ -183,7 +189,7 @@ export default class Npc {
               }
             } else {
               // cant buy
-              shopText.setText(`You require \n ${coinDiff} more coin(s)`)
+              shopText.setText(`You require \n ${coinDiff} more coin(s) \n to buy this`)
               Phaser.Display.Align.In.Center(shopText, shopTextBg)
             }
           }

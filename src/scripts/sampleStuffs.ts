@@ -42,7 +42,7 @@ export default class SampleStuffs {
     // throws some random object on the scene
     // this.third.haveSomeFun()
 
-    this.scene.third.load.gltf('/assets/glb/BatteryMageSingleShotTest.glb').then((gltf) => {
+    this.scene.third.load.gltf('assets/glb/BatteryMageSingleShotTest.glb').then((gltf) => {
       this.singleWand = new ExtendedObject3D()
       this.singleWand.name = 'singleWand'
       this.singleWand.add(gltf.scene)

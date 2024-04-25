@@ -1,4 +1,4 @@
-import { ZapIMG } from "../constants"
+import { ZapIMG } from '../constants'
 
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -7,9 +7,22 @@ export default class PreloadScene extends Phaser.Scene {
 
   preload() {
     // font created from snowb.org
-    this.load.bitmapFont('battery', '/assets/fonts/battery-font.png', '/assets/fonts/battery-font.xml')
-    this.load.image(ZapIMG.ZAP, '/assets/img/BatteryMageZap.png')
-    this.load.image(ZapIMG.ZAP2, '/assets/img/BatteryMageZap2.png')
+    this.load.bitmapFont('battery', 'assets/fonts/battery-font.png', 'assets/fonts/battery-font.xml')
+    this.load.image(ZapIMG.ZAP, 'assets/img/BatteryMageZap.png')
+    this.load.image(ZapIMG.ZAP2, 'assets/img/BatteryMageZap2.png')
+    // audio
+    this.load.audio('background', ['assets/audio/background.ogg', 'assets/audio/background.mp3'])
+    this.load.audio('boss', ['assets/audio/boss.ogg', 'assets/audio/boss.mp3'])
+    this.load.audio('wep1', ['assets/audio/wep1.ogg', 'assets/audio/wep1.mp3'])
+    this.load.audio('wep2', ['assets/audio/wep2.ogg', 'assets/audio/wep2.mp3'])
+    this.load.audio('wep3', ['assets/audio/wep3.ogg', 'assets/audio/wep3.mp3'])
+    this.load.audio('coin', ['assets/audio/coin.ogg', 'assets/audio/coin.mp3'])
+    this.load.audio('exp1', ['assets/audio/exp1.ogg', 'assets/audio/exp1.mp3'])
+    this.load.audio('exp2', ['assets/audio/exp2.ogg', 'assets/audio/exp2.mp3'])
+    this.load.audio('levelup', ['assets/audio/levelup.ogg', 'assets/audio/levelup.mp3'])
+    this.load.audio('victory', ['assets/audio/victory.ogg', 'assets/audio/victory.mp3'])
+    this.load.audio('drink', ['assets/audio/drink.ogg', 'assets/audio/drink.mp3'])
+    this.load.audio('buy', ['assets/audio/buy.ogg', 'assets/audio/buy.mp3'])
   }
 
   create() {
