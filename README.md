@@ -1,9 +1,10 @@
 <h1 align="center">
-  <br>
+  
+  
+![BatteryMageCoverResized](https://github.com/kkcmah/Battery-Mage/assets/16821647/2854c2ed-097e-4bc3-985b-964ed0af029d)
+<br>
   Battery Mage
   <br>
-  ![BatteryMageCover](https://github.com/kkcmah/Battery-Mage/assets/16821647/83306959-3fbe-4ca8-b5d8-39a06d7838db)
-
 </h1>
 
 ## About
@@ -43,8 +44,6 @@ All assets made by me within the jam time frame using Blender and Paint
 Audio are CC0 licensed from https://freesound.org/ and cut in Audacity
 
 Details of audio attribution can be found in src/assets/audio where I've listed links to the original audio sources
-
-This project started from an Enable3D template at: https://github.com/enable3d/enable3d-phaser-project-template
 
 ## Running Local Development
 
