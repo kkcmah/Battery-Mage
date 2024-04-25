@@ -41,7 +41,9 @@ The template file that I used for this project is from: https://github.com/enabl
 All assets made by me within the jam time frame using Blender and Paint
 
 Audio are CC0 licensed from https://freesound.org/ and cut in Audacity
+
 Details of audio attribution can be found in src/assets/audio where I've listed links to the original audio sources
+
 This project started from an Enable3D template at: https://github.com/enable3d/enable3d-phaser-project-template
 
 ## Running Local Development
