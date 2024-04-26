@@ -54,6 +54,8 @@ I have been learning 3D Blender for the past 4 months and have been gaming for 2
 ## Game TODOs But Will Probably Carry This Knowledge Over to Future Games
 
 - The environment is a bit barren, but adding extra assets would cause pc fans to go wrrrrrr even more than they already are due to the ground already being made up of 900 physics objects constantly checking collisions. On that note, I looked into creating instanced meshes or using shaders to replace these objects while keeping the changing colours feature, but wasn't able to figure things out. I will make environments out of less objects going forwards.
+- Original design with the mage was to have batteries floating around him which would act as dash/dodge roll charges that would pop when used
+- Skill tree
 - More flashier effects and animations
 - Interactable npcs, quests, and achievements
 - Better enemies in all aspects (ai, design, fights)
