@@ -48,7 +48,7 @@ export default class Weapon {
 
     for (let i = 0; i < this.weaponData.shotNum; i++) {
       const mageZap = this.scene.third.physics.add.sphere({
-        radius: 0.15,
+        radius: 0.22,
         x: pos.x,
         y: pos.y,
         z: pos.z,
@@ -57,9 +57,10 @@ export default class Weapon {
       mageZap.visible = false
       mageZap.name = ZAP
       mageZap.userData.damage = this.weaponData.damage
+      mageZap.userData.hitMonster = false
       // clamp motion to sweep a bit smaller than physics body radius
       mageZap.body.setCcdMotionThreshold(1)
-      mageZap.body.setCcdSweptSphereRadius(0.05)
+      mageZap.body.setCcdSweptSphereRadius(0.005)
       mageZap.body.setGravity(0, -1, 0)
       mageZap.body.setFriction(10)
 

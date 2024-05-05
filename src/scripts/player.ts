@@ -196,7 +196,7 @@ export default class Player extends ExtendedObject3D {
 
       // add third person controls
       this.controls = new ThirdPersonControls(this.scene.third.camera, this, {
-        offset: new THREE.Vector3(0, 1.5, 0.8),
+        offset: new THREE.Vector3(0, 1.5, 0.4),
         targetRadius: 4
       })
       // ability to see through ground if tilted up
@@ -515,6 +515,7 @@ export default class Player extends ExtendedObject3D {
   jump() {
     this.anims.play('jumping', 0, false)
     this.body.setVelocityY(5) // TODO maybe set back to applyforce but sorta had inconsistent jumps on different frame rates
+    if (!this.infiJump) this.canJump = false
   }
 
   respawn() {

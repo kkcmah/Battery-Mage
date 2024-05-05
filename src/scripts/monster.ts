@@ -105,8 +105,9 @@ export default class Monster {
         this.dealDamage()
       }
       // taking damage from player
-      if (this.currentState !== MonsterStates.Dead && otherObject.name === ZAP && event === 'start') {
+      if (this.currentState !== MonsterStates.Dead && otherObject.name === ZAP && !otherObject.userData.hitMonster) {
         this.tookDamage(otherObject.userData.damage * PLAYERREF.player.dmgFactor)
+        otherObject.userData.hitMonster = true
       }
     })
 

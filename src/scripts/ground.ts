@@ -20,6 +20,10 @@ export default class Ground {
     const SPREADMULTFACTOR = 1.0001
     // assume square ground
     const GROUNDX = 30 // 30
+    // ensure that ground heights differ by 10s else if you change this magic 0.1 number
+    // yOffset and jump height would need to be changed as well
+    const GROUNDHEIGHTFACTOR = 0.1
+
     for (let i = 0; i < GROUNDX; i++) {
       for (let j = 0; j < GROUNDX; j++) {
         let colorStartRed = i * GROUNDX + j
@@ -29,13 +33,12 @@ export default class Ground {
         let newBox = this.scene.third.physics.add.box(
           {
             x: i * boxX * SPREADMULTFACTOR,
-            // ensure that ground heights differ by 10s else if you change this magic 0.1 number
-            // yOffset and jump height would need to be changed as well
-            y: yOffset + groundHeights[colorStartRed] * 0.1,
+            y: yOffset + groundHeights[colorStartRed] * GROUNDHEIGHTFACTOR,
             z: j * boxX * SPREADMULTFACTOR,
             width: boxX,
             depth: boxX,
-            height: boxHeight
+            height: boxHeight,
+            mass: 0
           },
           {
             lambert: {
@@ -51,13 +54,29 @@ export default class Ground {
         // collision somehow doesnt work when i name it
         // newBox.name = 'ground'
         newBox.body.on.collision((otherObj, event) => {
-          if (otherObj.name === ZAP && !newBox.userData.isColored && event === 'start') {
+          if (otherObj.name === ZAP && !newBox.userData.isColored) {
+            this.scene.third.destroy(newBox)
+
             PLAYERREF.player?.litObject()
-            //@ts-ignore
-            newBox.material.color.set(
-              `rgb(${groundRGBs[colorStartRed][0]}, ${groundRGBs[colorStartRed][1]}, ${groundRGBs[colorStartRed][2]})`
+            newBox = this.scene.third.physics.add.box(
+              {
+                x: i * boxX * SPREADMULTFACTOR,
+                y: yOffset + groundHeights[colorStartRed] * GROUNDHEIGHTFACTOR,
+                z: j * boxX * SPREADMULTFACTOR,
+                width: boxX,
+                depth: boxX,
+                height: boxHeight
+              },
+              {
+                lambert: {
+                  color: `rgb(${groundRGBs[colorStartRed][0]}, ${groundRGBs[colorStartRed][1]}, ${groundRGBs[colorStartRed][2]})`
+                }
+              }
             )
-            newBox.userData.isColored = true
+            newBox.body.setCollisionFlags(2)
+            newBox.body.setAngularFactor(0, 0, 0)
+            newBox.body.setLinearFactor(0, 0, 0)
+            newBox.userData = { isColored: true, isGround: true }
 
             // get position
             let tmp = newBox.position.clone()
@@ -72,6 +91,29 @@ export default class Ground {
               onUpdate: () => {
                 newBox.position.set(tmp.x, tmp.y, tmp.z)
                 newBox.body.needUpdate = true
+              },
+              onComplete: () => {
+                this.scene.third.destroy(newBox)
+                newBox = this.scene.third.physics.add.box(
+                  {
+                    x: i * boxX * SPREADMULTFACTOR,
+                    y: yOffset + groundHeights[colorStartRed] * GROUNDHEIGHTFACTOR,
+                    z: j * boxX * SPREADMULTFACTOR,
+                    width: boxX,
+                    depth: boxX,
+                    height: boxHeight,
+                    mass: 0
+                  },
+                  {
+                    lambert: {
+                      color: `rgb(${groundRGBs[colorStartRed][0]}, ${groundRGBs[colorStartRed][1]}, ${groundRGBs[colorStartRed][2]})`
+                    }
+                  }
+                )
+                newBox.body.setCollisionFlags(2)
+                newBox.body.setAngularFactor(0, 0, 0)
+                newBox.body.setLinearFactor(0, 0, 0)
+                newBox.userData = { isColored: true, isGround: true }
               }
             })
 
