@@ -101,11 +101,11 @@ export default class Monster {
     this.monsterObj3D.body.on.collision((otherObject, event) => {
       if (!PLAYERREF.player) return
       // damaging player
-      if (otherObject.name === MAGE && this.currentState !== MonsterStates.Dead) {
+      if (otherObject.userData.name === MAGE && this.currentState !== MonsterStates.Dead) {
         this.dealDamage()
       }
       // taking damage from player
-      if (this.currentState !== MonsterStates.Dead && otherObject.name === ZAP && !otherObject.userData.hitMonster) {
+      if (this.currentState !== MonsterStates.Dead && otherObject.userData.name === ZAP && !otherObject.userData.hitMonster) {
         this.tookDamage(otherObject.userData.damage * PLAYERREF.player.dmgFactor)
         otherObject.userData.hitMonster = true
       }
@@ -429,7 +429,7 @@ export default class Monster {
       )
       projectile.body.setGravity(0, -1, 0)
       projectile.body.on.collision((otherObj, event) => {
-        if (otherObj.name === MAGE) {
+        if (otherObj.userData.name === MAGE) {
           this.dealDamage()
         }
       })

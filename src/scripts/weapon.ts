@@ -55,7 +55,7 @@ export default class Weapon {
         mass: 1
       })
       mageZap.visible = false
-      mageZap.name = ZAP
+      mageZap.userData.name = ZAP
       mageZap.userData.damage = this.weaponData.damage
       mageZap.userData.hitMonster = false
       // clamp motion to sweep a bit smaller than physics body radius

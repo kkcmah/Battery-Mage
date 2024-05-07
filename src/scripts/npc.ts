@@ -73,7 +73,7 @@ export default class Npc {
     this.npcObj3D.body.setFriction(0.8)
     this.npcObj3D.userData = { isColored: false, isGround: true }
     this.npcObj3D.body.on.collision((otherObj, event) => {
-      if (otherObj.name === ZAP && !this.npcObj3D.userData.isColored) {
+      if (otherObj.userData.name === ZAP && !this.npcObj3D.userData.isColored) {
         PLAYERREF.player?.litObject()
         //@ts-ignore
         this.npcObj3D.material.color.set(`rgb(${this.colorRGB.r}, ${this.colorRGB.g}, ${this.colorRGB.b})`)

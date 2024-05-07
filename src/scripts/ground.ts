@@ -54,7 +54,7 @@ export default class Ground {
         // collision somehow doesnt work when i name it
         // newBox.name = 'ground'
         newBox.body.on.collision((otherObj, event) => {
-          if (otherObj.name === ZAP && !newBox.userData.isColored) {
+          if (otherObj.userData.name === ZAP && !newBox.userData.isColored) {
             this.scene.third.destroy(newBox)
 
             PLAYERREF.player?.litObject()

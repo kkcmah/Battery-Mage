@@ -123,7 +123,7 @@ export default class Player extends ExtendedObject3D {
     // add player
     this.scene.third.load.gltf('assets/glb/BatteryMageWithAllWandsV1.glb').then((object) => {
       const mage = object.scene.children[0]
-      this.name = MAGE
+      this.userData.name = MAGE
       this.add(mage)
       this.position.set(0, 0, 0)
       this.scale.setScalar(0.5)

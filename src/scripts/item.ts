@@ -53,7 +53,7 @@ export default class Item {
       { phong: { color: 'gold', transparent: true, opacity: 1 } }
     )
 
-    this.itemObj3D.name = COIN
+    this.itemObj3D.userData.name = COIN
   }
 
   constructEXP() {
@@ -77,7 +77,7 @@ export default class Item {
 
     this.itemObj3D.add(inner)
 
-    this.itemObj3D.name = EXP
+    this.itemObj3D.userData.name = EXP
   }
 
   flyTowardsAndAutoCollect() {
